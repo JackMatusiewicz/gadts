@@ -4,8 +4,11 @@ pub struct Teq<A, B> {
 }
 
 impl<A> Teq<A,A> {
-    pub fn refl(f: fn(A) -> A) -> Teq<A, A> {
-        Teq { to: f, from: f }
+
+    fn id(v: A) -> A { v }
+
+    pub fn refl() -> Teq<A, A> {
+        Teq { to: Teq::<A,A>::id, from: Teq::<A,A>::id }
     }
 }
 
