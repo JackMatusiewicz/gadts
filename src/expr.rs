@@ -13,23 +13,19 @@ pub enum Expr<A: Copy> {
 impl<A: Copy> Expr<A> {
     pub fn evaluate(e: &Expr<A>) -> A {
         match e {
-            Expr::Int(v, t) => {
-                let clone = v.clone();
-                Teq::from(t, clone)
-            },
-            Expr::Bool(v, t) => {
-                let clone = v.clone();
-                Teq::from(t, clone)
-            },
+            Expr::Int(v, t) =>
+                Teq::from(t, v.clone()),
+            Expr::Bool(v, t) =>
+                Teq::from(t, v.clone()),
             Expr::Add(left, right, t) => {
-                let l = Expr::<i32>::evaluate(&left);
-                let r = Expr::<i32>::evaluate(&right);
+                let l = Expr::evaluate(&left);
+                let r = Expr::evaluate(&right);
                 let sum = l + r;
                 Teq::from(t, sum)
             },
             Expr::Eq(left, right, t) => {
-                let l = Expr::<i32>::evaluate(&left);
-                let r = Expr::<i32>::evaluate(&right);
+                let l = Expr::evaluate(&left);
+                let r = Expr::evaluate(&right);
                 let sum = l == r;
                 Teq::from(t, sum)
             }
