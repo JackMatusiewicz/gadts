@@ -1,15 +1,16 @@
 use std::rc::Rc;
 use crate::teq::Teq;
 
-// The copy trait constraint is used here so you can reuse
-// expressions in your tree
-pub enum Expr<A: Copy> {
+
+pub enum Expr<A> {
     Int(i32, Teq<A, i32>),
     Bool(bool, Teq<A, bool>),
     Add(Rc<Expr<i32>>, Rc<Expr<i32>>, Teq<A, i32>),
     Eq(Rc<Expr<i32>>, Rc<Expr<i32>>, Teq<A, bool>)
 }
 
+// The copy trait constraint is used here so you can reuse
+// expressions in your tree
 impl<A: Copy> Expr<A> {
     pub fn evaluate(e: &Expr<A>) -> A {
         match e {
