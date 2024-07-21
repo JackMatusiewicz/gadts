@@ -4,6 +4,7 @@ mod expr;
 use std::rc::Rc;
 use teq::Teq;
 use expr::Expr;
+use crate::expr::{AddExpr, EqExpr, ExprT, IntExpr};
 
 fn main() {
     let int_teq = Teq::refl();
@@ -22,6 +23,12 @@ fn main() {
     let even = Expr::Eq(Rc::new(first_ten), Rc::new(ten), bool_teq.clone());
     
     let is_even = Expr::evaluate(&even);
+
+    let a = IntExpr(5);
+    let b = IntExpr(5);
+    let sum = AddExpr { a,b };
+    let ten = IntExpr(10);
+    let equal = EqExpr {a: sum, b: ten };
     
-    println!("{}", is_even);
+    println!("{}", equal.eval());
 }
